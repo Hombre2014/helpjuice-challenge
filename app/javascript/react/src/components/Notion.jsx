@@ -18,7 +18,7 @@ const Notion = () => {
 
   useEffect(() => {
     fetchLines();
-  }, []);
+  }, [message]);
 
   useEffect(() => {
     newLine({content: message, header: header});

@@ -16,12 +16,12 @@ const Display = (props) => {
     // setLine({
     //   content: e.target.value,
     // });
-    updateLines({content: e.target.value});
+    updateLine({content: e.target.value});
   };
 
   const updateLine = (data) => {
     fetch(
-      `http://localhost:3000/api/v1/lines/${props.line.id}/update_content`,
+      `http://localhost:3000/api/v1/lines/1/update_content`,
       {
         method: 'PUT',
         headers: {
@@ -32,7 +32,10 @@ const Display = (props) => {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        console.log('PUT: ', data);
+      })
+      setLines({
+        content: data.content
       })
       .catch((error) => {
         console.log(error);
