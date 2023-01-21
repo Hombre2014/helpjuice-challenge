@@ -20,6 +20,28 @@ const Notion = () => {
     fetchLines();
   }, []);
 
+  useEffect(() => {
+    newLine({content: message, header: header});
+  }, [message]);
+
+
+  const newLine = (data) => {
+    fetch('http://localhost:3000/api/v1/lines', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const handleClick = () => {
     const plot = document.getElementById('plot');
     plot.setAttribute('placeholder', 'Type /1 for heading 1');
@@ -44,11 +66,13 @@ const Notion = () => {
       plot.classList.remove('h1');
       plot.setAttribute('placeholder', 'Type /1 for heading 1');
       console.log('Here you have to render message!', header);
+      // newLine({content: message}, {header: header});
       // setHeader(false);
     } else if (e.keyCode === 13 && header === false) {
       e.preventDefault();
       setMessage(e.target.value);
       console.log(header);
+      // newLine({content: message}, {header: header});
       plot.value = '';
       plot.setAttribute('placeholder', 'Type /1 for heading 1');
       setHeader(false);
