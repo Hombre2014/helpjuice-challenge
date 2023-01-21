@@ -1,8 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Display from './Display';
 
 const Notion = () => {
+  const [lines, setLines] = useState([]);
+  const linesUrl = 'http://localhost:3000/api/v1/lines';
   const [message, setMessage] = useState('');
   const [header, setHeader] = useState(false);
+
+  const fetchLines = () => {
+    fetch(linesUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      setLines(data);
+    })
+  }
+
+  useEffect(() => {
+    fetchLines();
+  }, []);
 
   const handleClick = () => {
     const plot = document.getElementById('plot');
@@ -43,7 +59,7 @@ const Notion = () => {
   return (
     <div>
       <h2>Start typing below</h2>
-      {header ? <h1>{message}</h1> : <p>{message}</p>}
+      <Display lines={lines} />
       <textarea id='plot' name="plot" rows="32" cols="80" placeholder='' className='bg-white border-0' style={{outline: 'none'}} onClick={handleClick} onChange={handleChange} onKeyDown={handleEnter} />
     </div>
   )
