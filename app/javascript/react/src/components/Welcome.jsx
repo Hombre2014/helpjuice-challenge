@@ -1,5 +1,5 @@
 import React from 'react';
-import * as ReactDOM from 'react-dom';
+import * as ReactDOM from 'react-dom/client';
 import Notion from './Notion';
 
 const Welcome = () => {
@@ -11,8 +11,11 @@ const Welcome = () => {
   )
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(<Welcome />, document.getElementById('welcome'))
-});
+const root = ReactDOM.createRoot(document.getElementById('welcome'));
+root.render(
+  <React.StrictMode>
+    <Welcome />
+  </React.StrictMode>
+);
 
 export default Welcome;

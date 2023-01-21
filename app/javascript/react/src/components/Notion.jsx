@@ -35,6 +35,7 @@ const Notion = () => {
       console.log(header);
       plot.value = '';
       plot.setAttribute('placeholder', 'Type /1 for heading 1');
+      setHeader(false);
     }
     return false;
   }
