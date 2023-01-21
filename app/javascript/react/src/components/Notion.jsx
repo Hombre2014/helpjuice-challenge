@@ -66,8 +66,9 @@ const Notion = () => {
       plot.classList.remove('h1');
       plot.setAttribute('placeholder', 'Type /1 for heading 1');
       console.log('Here you have to render message!', header);
-      // newLine({content: message}, {header: header});
-      // setHeader(false);
+      newLine({content: message}, {header: header});
+      fetchLines();
+      setHeader(false);
     } else if (e.keyCode === 13 && header === false) {
       e.preventDefault();
       setMessage(e.target.value);
@@ -83,7 +84,9 @@ const Notion = () => {
   return (
     <div>
       <h2>Start typing below</h2>
-      <Display lines={lines} />
+      <ul>
+        <Display lines={lines} />
+      </ul>
       <textarea id='plot' name="plot" rows="32" cols="80" placeholder='' className='bg-white border-0' style={{outline: 'none'}} onClick={handleClick} onChange={handleChange} onKeyDown={handleEnter} />
     </div>
   )
