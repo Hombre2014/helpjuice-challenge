@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const Notion = () => {
   const [message, setMessage] = useState('');
-  let header = false;
+  const [header, setHeader] = useState(false);
 
   const handleClick = () => {
     const plot = document.getElementById('plot');
@@ -15,21 +15,26 @@ const Notion = () => {
       plot.value = '';
       plot.setAttribute('placeholder', 'Heading 1');
       plot.classList.add('h1');
-      header = true;
-    } else {
-      header = false;
+      plot.value = '';
+      setHeader(true);
     }
   }
 
   const handleEnter = (e) => {
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13 && header === true) {
       e.preventDefault();
-      console.log('Enter pressed');
       setMessage(e.target.value);
       plot.value = '';
       plot.classList.remove('h1');
       plot.setAttribute('placeholder', 'Type /1 for heading 1');
-      console.log('Value is: ', e.target.value);
+      console.log('Here you have to render message!', header);
+      // setHeader(false);
+    } else if (e.keyCode === 13 && header === false) {
+      e.preventDefault();
+      setMessage(e.target.value);
+      console.log(header);
+      plot.value = '';
+      plot.setAttribute('placeholder', 'Type /1 for heading 1');
     }
     return false;
   }
@@ -37,7 +42,7 @@ const Notion = () => {
   return (
     <div>
       <h2>Start typing below</h2>
-      {header === false ? <p>{message}</p> : <h1>{message}</h1>}
+      {header ? <h1>{message}</h1> : <p>{message}</p>}
       <textarea id='plot' name="plot" rows="32" cols="80" placeholder='' className='bg-white border-0' style={{outline: 'none'}} onClick={handleClick} onChange={handleChange} onKeyDown={handleEnter} />
     </div>
   )
