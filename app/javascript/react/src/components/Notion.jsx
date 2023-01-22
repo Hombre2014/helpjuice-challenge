@@ -5,7 +5,7 @@ const Notion = () => {
   const [lines, setLines] = useState([]);
   const [content, setContent] = useState('');
   const [header, setHeader] = useState(0);
-  const linesUrl = 'http://localhost:3000/api/v1/lines';
+  const linesUrl = 'https://pacific-tundra-66615.herokuapp.com/api/v1/lines';
 
   const fetchLines = async () => (
     await fetch(linesUrl)
@@ -20,7 +20,7 @@ const Notion = () => {
   }, [content]);
 
   const newLine = async (data) => {
-    const response = await fetch('http://localhost:3000/api/v1/lines', {
+    const response = await fetch('https://pacific-tundra-66615.herokuapp.com/api/v1/lines', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

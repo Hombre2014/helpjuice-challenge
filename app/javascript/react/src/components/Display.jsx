@@ -3,11 +3,11 @@ import axios from 'axios';
 
 const Display = (props) => {
   const [lines, setLines] = useState(props.lines);
-  const linesUrl = 'http://localhost:3000/api/v1/lines';
+  const linesUrl = 'https://pacific-tundra-66615.herokuapp.com/api/v1/lines';
 
   const handleChange = async (e) => {
     const updateLine = async (data) => {
-      const result = await axios.patch(`http://localhost:3000/api/v1/lines/${e.target.dataset.id}/update_content`, data)
+      const result = await axios.patch(`https://pacific-tundra-66615.herokuapp.com/api/v1/lines/${e.target.dataset.id}/update_content`, data)
         .catch(error => console.log(error))
       
       const lineId = e.target.dataset.id;
