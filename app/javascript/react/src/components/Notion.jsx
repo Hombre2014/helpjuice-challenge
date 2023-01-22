@@ -8,10 +8,9 @@ const Notion = () => {
   const linesUrl = 'http://localhost:3000/api/v1/lines';
 
   const fetchLines = async () => (
-    fetch(linesUrl)
+    await fetch(linesUrl)
       .then((response) => response.json())
       .then((data) => {
-        console.log('This is DATA from fetch Lines', data);
         setLines(data);
       })
   );
@@ -20,25 +19,7 @@ const Notion = () => {
     fetchLines();
   }, [content]);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     await fetchLines();
-  //   })();
-  // }, [content]);
-
-  // useEffect(() => {
-  //   (async() => {
-  //     await fetchLines();
-  //   })();
-  // }, []);
-
-  // useEffect(() => {
-  //   setMessage({ content: content, header: header });
-  // }, [content, header]);
-
   const newLine = async (data) => {
-    console.log('This is DATA: ', data);
-    console.log('This is JSON DATA: ', JSON.stringify(data));
     const response = await fetch('http://localhost:3000/api/v1/lines', {
       method: 'POST',
       headers: {
@@ -46,7 +27,6 @@ const Notion = () => {
       },
       body: JSON.stringify(data),
     });
-    const result = await response.json();
   };
 
   const handleClick = () => {
@@ -69,7 +49,6 @@ const Notion = () => {
       e.preventDefault();
       await newLine({ content: '' + e.target.value, header: 1 });
       setContent(e.target.value);
-      // fetchLines();
       setHeader(0);
       plot.value = '';
       plot.classList.remove('h1');
@@ -80,7 +59,6 @@ const Notion = () => {
       setContent(e.target.value);
       plot.value = '';
       plot.setAttribute('placeholder', 'Type /1 for heading 1');
-      // fetchLines();
     }
     return false;
   }

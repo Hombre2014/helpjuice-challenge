@@ -6,9 +6,6 @@ const Display = (props) => {
   const linesUrl = 'http://localhost:3000/api/v1/lines';
 
   const handleChange = async (e) => {
-    console.log('This the value: ', e.target.value);
-    console.log('This the id: ', e.target.dataset.id);
-
     const updateLine = async (data) => {
       const result = await axios.patch(`http://localhost:3000/api/v1/lines/${e.target.dataset.id}/update_content`, data)
         .catch(error => console.log(error))
@@ -21,14 +18,12 @@ const Display = (props) => {
     };
 
     await updateLine({ content: e.target.value });
-    // await fetchLines();
   };
 
   const fetchLines = () => {
     fetch(linesUrl)
       .then((response) => response.json())
       .then((data) => {
-        console.log('This is DATA from fetch Lines', data);
         setLines(data);
       });
   };
@@ -36,10 +31,6 @@ const Display = (props) => {
   useEffect(() => {
     fetchLines();
   }, []);
-
-  // useEffect(() => {
-  //   fetchLines();
-  // }, [lines]);
 
   return (
     <>
