@@ -47,7 +47,6 @@ const Notion = () => {
       body: JSON.stringify(data),
     });
     const result = await response.json();
-    console.log('This is DATA from POST fetch', result);
   };
 
   const handleClick = () => {
@@ -62,18 +61,12 @@ const Notion = () => {
       plot.setAttribute('placeholder', 'Heading 1');
       plot.classList.add('h1');
       setHeader(1);
-      console.log('Just setHeader to 1: ', header);
     }
   }
 
   const handleEnter = async (e) => {
     if (e.keyCode === 13 && header === 1) {
       e.preventDefault();
-      console.log('header is 1?: ', header);
-      console.log('Content is: ', e.target.value);
-      // setContent(e.target.value);
-      console.log('Message content is: ', content);
-      console.log('Message header is: ', header);
       await newLine({ content: '' + e.target.value, header: 1 });
       setContent(e.target.value);
       // fetchLines();
@@ -81,12 +74,8 @@ const Notion = () => {
       plot.value = '';
       plot.classList.remove('h1');
       plot.setAttribute('placeholder', 'Type /1 for heading 1');
-      console.log('header is false', header);
     } else if (e.keyCode === 13 && header === 0) {
       e.preventDefault();
-      console.log('header is false', header);
-      // setContent(e.target.value);
-      console.log('Message content is: ', e.target.value);
       await newLine({content: '' + e.target.value, header: 0});
       setContent(e.target.value);
       plot.value = '';
