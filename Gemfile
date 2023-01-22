@@ -72,3 +72,7 @@ group :test do
 end
 
 gem "cssbundling-rails"
+
+group :production do
+  gem "pg"
+end
