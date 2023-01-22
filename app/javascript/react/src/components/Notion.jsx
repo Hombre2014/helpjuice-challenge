@@ -16,16 +16,15 @@ const Notion = () => {
       })
   );
 
-  // useEffect(() => {
-  //   fetchLines();
-  // }, [content]);
-
   useEffect(() => {
-    (async () => {
-      // await newLine({content: content, header: header});
-      await fetchLines();
-    })();
+    fetchLines();
   }, [content]);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     await fetchLines();
+  //   })();
+  // }, [content]);
 
   // useEffect(() => {
   //   (async() => {
@@ -50,23 +49,6 @@ const Notion = () => {
     const result = await response.json();
     console.log('This is DATA from POST fetch', result);
   };
-
-  // const newLine = (data) => {
-  //   fetch('http://localhost:3000/api/v1/lines', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(data),
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log('This is DATA from POST fetch', data);
-  //     })
-  //     .catch((error) => {
-  //       console.log('This is error from POST fetch: ', error);
-  //     });
-  // };
 
   const handleClick = () => {
     const plot = document.getElementById('plot');
