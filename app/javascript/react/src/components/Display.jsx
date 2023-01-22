@@ -19,18 +19,18 @@ const Display = (props) => {
     });
   };
 
-  const fetchLines = () => {
-    fetch(linesUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('This is DATA from fetch Lines', data);
-        setLines(data);
-      });
-  };
+  // const fetchLines = () => {
+  //   fetch(linesUrl)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log('This is DATA from fetch Lines', data);
+  //       setLines(data);
+  //     });
+  // };
 
-  useEffect(() => {
-    fetchLines();
-  }, []);
+  // useEffect(() => {
+  //   fetchLines();
+  // }, []);
 
   const handleEdit = (e) => {
     console.log('This the value: ', e.target.value);
@@ -57,8 +57,8 @@ const Display = (props) => {
       //   console.log(error);
       // });
     };
-    updateLine({ content: e.target.value });
-    fetchLines();
+    // updateLine({ content: e.target.value });
+    // fetchLines();
   };
 
   return (

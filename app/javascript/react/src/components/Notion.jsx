@@ -3,35 +3,43 @@ import Display from './Display';
 
 const Notion = () => {
   const [lines, setLines] = useState([]);
-  const [message, setMessage] = useState({
-    content: '',
-    header: 0,
-  });
-  // const [header, setHeader] = useState(0);
+  const [content, setContent] = useState('');
+  const [header, setHeader] = useState(0);
   const linesUrl = 'http://localhost:3000/api/v1/lines';
 
-  const fetchLines = () => {
+  const fetchLines = async () => (
     fetch(linesUrl)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log('This is DATA from fetch Lines', data);
-      setLines(data);
-    })
-  }
-
-  useEffect(() => {
-    fetchLines();
-  }, [message.content]);
-
-  useEffect(() => {
-    newLine({content: message.content, header: message.header});
-  }, [message.content]);
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('This is DATA from fetch Lines', data);
+        setLines(data);
+      })
+  );
 
   // useEffect(() => {
-  //   setMessage({ content: message.content, header: message.header });
-  // }, [message.content, message.header]);
+  //   fetchLines();
+  // }, [content]);
+
+  useEffect(() => {
+    (async () => {
+      // await newLine({content: content, header: header});
+      await fetchLines();
+    })();
+  }, [content]);
+
+  // useEffect(() => {
+  //   (async() => {
+  //     await fetchLines();
+  //   })();
+  // }, []);
+
+  // useEffect(() => {
+  //   setMessage({ content: content, header: header });
+  // }, [content, header]);
 
   const newLine = async (data) => {
+    console.log('This is DATA: ', data);
+    console.log('This is JSON DATA: ', JSON.stringify(data));
     const response = await fetch('http://localhost:3000/api/v1/lines', {
       method: 'POST',
       headers: {
@@ -71,37 +79,37 @@ const Notion = () => {
       plot.value = '';
       plot.setAttribute('placeholder', 'Heading 1');
       plot.classList.add('h1');
-      setMessage({ content: '', header: 1 });
-      console.log('Just setHeader to 1: ', message.header);
+      setHeader(1);
+      console.log('Just setHeader to 1: ', header);
     }
   }
 
-  const handleEnter = (e) => {
-    if (e.keyCode === 13 && message.header === 1) {
+  const handleEnter = async (e) => {
+    if (e.keyCode === 13 && header === 1) {
       e.preventDefault();
-      console.log('header is true', message.header);
+      console.log('header is 1?: ', header);
       console.log('Content is: ', e.target.value);
-      const value = e.target.value;
-      console.log('Value is. This is for the message.content: ', value);
-      setMessage({ content: value, header: 1 });
-      console.log('Message content is: ', message.content);
-      console.log('Content type is: ', typeof message.content);
-      console.log('Message header is: ', message.header);
+      // setContent(e.target.value);
+      console.log('Message content is: ', content);
+      console.log('Message header is: ', header);
+      await newLine({ content: '' + e.target.value, header: 1 });
+      setContent(e.target.value);
+      // fetchLines();
+      setHeader(0);
       plot.value = '';
       plot.classList.remove('h1');
       plot.setAttribute('placeholder', 'Type /1 for heading 1');
-      newLine({content: message.content, header: message.header});
-      fetchLines();
-      setMessage({content: '', header: 0});
-      console.log('header is false', message.header);
-    } else if (e.keyCode === 13 && message.header === 0) {
+      console.log('header is false', header);
+    } else if (e.keyCode === 13 && header === 0) {
       e.preventDefault();
-      console.log('header is false', message.header);
-      setMessage({content: e.target.value, header: message.header});
+      console.log('header is false', header);
+      // setContent(e.target.value);
+      console.log('Message content is: ', e.target.value);
+      await newLine({content: '' + e.target.value, header: 0});
+      setContent(e.target.value);
       plot.value = '';
       plot.setAttribute('placeholder', 'Type /1 for heading 1');
-      // newLine({content: message.content, header: 0});
-      fetchLines();
+      // fetchLines();
     }
     return false;
   }
