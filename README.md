@@ -37,11 +37,6 @@ To start with clean database use:
 `cd helpjuice-challenge`</br>
 `rails db:drop db:create db:migrate`
 
-## Testing
-
-`cd helpjuice-challenge`</br>
-run `rspec`
-
 ## Author
 
 👤 **Yuriy Chamkoriyski**
