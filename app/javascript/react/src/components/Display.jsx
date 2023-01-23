@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const Display = (props) => {
   const [lines, setLines] = useState([props.lines]);
@@ -41,7 +42,7 @@ const Display = (props) => {
 
   return (
     <>
-      {props.lines.map((line) => {
+      {lines.map((line) => {
         return (
           <li key={line.id.toString()} className="list-group-item border-0 p-0">
             {line.header ? (
