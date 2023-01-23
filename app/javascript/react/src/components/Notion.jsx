@@ -16,17 +16,20 @@ const Notion = () => {
   );
 
   useEffect(() => {
-    fetchLines();
+    (async () => {
+      await fetchLines();
+    })();
   }, [content]);
 
   const newLine = async (data) => {
-    const response = await fetch('https://pacific-tundra-66615.herokuapp.com/api/v1/lines', {
+    const response = await fetch('http://localhost:3000/api/v1/lines', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
     });
+    const result = await response.json();
   };
 
   const handleClick = () => {

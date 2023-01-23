@@ -2,16 +2,24 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Display = (props) => {
-  const [lines, setLines] = useState(props.lines);
-  const linesUrl = 'https://pacific-tundra-66615.herokuapp.com/api/v1/lines';
+  const [lines, setLines] = useState([props.lines]);
+  const linesUrl = 'http://localhost:3000/api/v1/lines';
 
   const handleChange = async (e) => {
     const updateLine = async (data) => {
-      const result = await axios.patch(`https://pacific-tundra-66615.herokuapp.com/api/v1/lines/${e.target.dataset.id}/update_content`, data)
-        .catch(error => console.log(error))
-      
+      fetch(`http://localhost:3000/api/v1/lines/2/update_content`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('PATCH: ', data);
+      });      
       const lineId = e.target.dataset.id;
-      const line = lines.find((line) => line.id === parseInt(lineId));
+      const line = props.lines.find((line) => line.id === parseInt(lineId));
       line.content = e.target.value;
       setLines(lines);
       fetchLines();
