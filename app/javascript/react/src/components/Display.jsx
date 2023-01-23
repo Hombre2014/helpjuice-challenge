@@ -1,23 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
 const Display = (props) => {
-  const [lines, setLines] = useState([]);
-  const [lineId, setLineId] = useState(0);
+  const [lines, setLines] = useState([props.lines]);
   const linesUrl = 'http://localhost:3000/api/v1/lines';
 
-  const handleClick = (e) => {
-    console.log(e.target.value);
-    setLines({
-      content: e.target.value,
-    });
-  };
-
-  const handleChange = (e) => {
-    console.log(e.target.value);
-    setLines({
-      content: e.target.value,
-    });
-  };
+  // const handleChange = (e) => {
+  //   console.log(e.target.value);
+  //   setLines({
+  //     content: e.target.value,
+  //   });
+  // };
 
   // const fetchLines = () => {
   //   fetch(linesUrl)
@@ -32,34 +24,79 @@ const Display = (props) => {
   //   fetchLines();
   // }, []);
 
-  const handleEdit = (e) => {
-    console.log('This the value: ', e.target.value);
-    console.log('This the id: ', e.target.dataset.id);
-    setLineId(parseInt(e.target.dataset.id));
-    console.log('This is lineId: ', lineId);
-
-    const updateLine = (data) => {
-      fetch(`https://localhost:3000/api/v1/lines/2/update_content`, {
-        method: 'PUT',
+  const handleChange = async (e) => {
+    const updateLine = async (data) => {
+      fetch(`http://localhost:3000/api/v1/lines/2/update_content`, {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log('PUT: ', data);
-        });
-      setLines({
-        content: data.content,
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('PATCH: ', data);
       });
-      // .catch((error) => {
-      //   console.log(error);
-      // });
+      // const result = await axios.patch(`http://localhost:3000/api/v1/lines/${e.target.dataset.id}/update_content`, data)
+      //   .catch(error => console.log(error))
+      
+      const lineId = e.target.dataset.id;
+      console.log('This is lineId: ', lineId);
+      const line = props.lines.find((line) => line.id === parseInt(lineId));
+      console.log('This is line: ', line);
+      line.content = e.target.value;
+      setLines(lines);
+      fetchLines();
     };
-    // updateLine({ content: e.target.value });
-    // fetchLines();
+
+    await updateLine({ content: e.target.value });
   };
+
+  const fetchLines = () => {
+    fetch(linesUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        setLines(data);
+      });
+  };
+
+  useEffect(() => {
+    fetchLines();
+  }, []);
+
+
+
+
+
+
+  // const handleEdit = (e) => {
+  //   console.log('This the value: ', e.target.value);
+  //   console.log('This the id: ', e.target.dataset.id);
+  //   setLineId(parseInt(e.target.dataset.id));
+  //   console.log('This is lineId: ', lineId);
+
+  //   const updateLine = (data) => {
+  //     fetch(`https://localhost:3000/api/v1/lines/2/update_content`, {
+  //       method: 'PUT',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(data),
+  //     })
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         console.log('PUT: ', data);
+  //       });
+  //     setLines({
+  //       content: data.content,
+  //     });
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  //   };
+  //   updateLine({ content: e.target.value });
+  //   fetchLines();
+  // };
 
   return (
     <>
@@ -77,8 +114,6 @@ const Display = (props) => {
                 className="bg-white border-0 h1"
                 style={{ outline: 'none', resize: 'none' }}
                 value={line.content}
-                onBlur={handleEdit}
-                onClick={handleClick}
                 onChange={handleChange}
               />
             ) : (
@@ -92,8 +127,6 @@ const Display = (props) => {
                 className="bg-white border-0"
                 style={{ outline: 'none', resize: 'none' }}
                 value={line.content}
-                onBlur={handleEdit}
-                onClick={handleClick}
                 onChange={handleChange}
               />
             )}
