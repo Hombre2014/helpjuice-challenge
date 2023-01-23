@@ -5,7 +5,7 @@ const Notion = () => {
   const [lines, setLines] = useState([]);
   const [content, setContent] = useState('');
   const [header, setHeader] = useState(0);
-  const linesUrl = 'https://pacific-tundra-66615.herokuapp.com/api/v1/lines';
+  const linesUrl = 'http://localhost:3000/api/v1/lines';
 
   const fetchLines = async () => (
     await fetch(linesUrl)

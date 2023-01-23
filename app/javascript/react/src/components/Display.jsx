@@ -42,7 +42,7 @@ const Display = (props) => {
 
   return (
     <>
-      {lines.map((line) => {
+      {props.lines.map((line) => {
         return (
           <li key={line.id.toString()} className="list-group-item border-0 p-0">
             {line.header ? (

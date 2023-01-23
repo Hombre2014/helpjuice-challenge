@@ -8,7 +8,7 @@ The full description of the assignment could be find [here](https://docs.google.
 
 ## Live demo
 
-[App]()
+[App](https://pacific-tundra-66615.herokuapp.com/)
 
 ## Deployment
 
