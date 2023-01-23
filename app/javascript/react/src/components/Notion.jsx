@@ -11,35 +11,17 @@ const Notion = () => {
     fetch(linesUrl)
       .then((response) => response.json())
       .then((data) => {
-        console.log('This is DATA from fetch Lines', data);
         setLines(data);
       })
   );
 
-  // useEffect(() => {
-  //   fetchLines();
-  // }, [content]);
-
   useEffect(() => {
     (async () => {
-      // await newLine({content: content, header: header});
       await fetchLines();
     })();
   }, [content]);
 
-  // useEffect(() => {
-  //   (async() => {
-  //     await fetchLines();
-  //   })();
-  // }, []);
-
-  // useEffect(() => {
-  //   setMessage({ content: content, header: header });
-  // }, [content, header]);
-
   const newLine = async (data) => {
-    console.log('This is DATA: ', data);
-    console.log('This is JSON DATA: ', JSON.stringify(data));
     const response = await fetch('http://localhost:3000/api/v1/lines', {
       method: 'POST',
       headers: {
@@ -48,25 +30,7 @@ const Notion = () => {
       body: JSON.stringify(data),
     });
     const result = await response.json();
-    console.log('This is DATA from POST fetch', result);
   };
-
-  // const newLine = (data) => {
-  //   fetch('http://localhost:3000/api/v1/lines', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(data),
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log('This is DATA from POST fetch', data);
-  //     })
-  //     .catch((error) => {
-  //       console.log('This is error from POST fetch: ', error);
-  //     });
-  // };
 
   const handleClick = () => {
     const plot = document.getElementById('plot');
@@ -80,36 +44,24 @@ const Notion = () => {
       plot.setAttribute('placeholder', 'Heading 1');
       plot.classList.add('h1');
       setHeader(1);
-      console.log('Just setHeader to 1: ', header);
     }
   }
 
   const handleEnter = async (e) => {
     if (e.keyCode === 13 && header === 1) {
       e.preventDefault();
-      console.log('header is 1?: ', header);
-      console.log('Content is: ', e.target.value);
-      // setContent(e.target.value);
-      console.log('Message content is: ', content);
-      console.log('Message header is: ', header);
       await newLine({ content: '' + e.target.value, header: 1 });
       setContent(e.target.value);
-      // fetchLines();
       setHeader(0);
       plot.value = '';
       plot.classList.remove('h1');
       plot.setAttribute('placeholder', 'Type /1 for heading 1');
-      console.log('header is false', header);
     } else if (e.keyCode === 13 && header === 0) {
       e.preventDefault();
-      console.log('header is false', header);
-      // setContent(e.target.value);
-      console.log('Message content is: ', e.target.value);
       await newLine({content: '' + e.target.value, header: 0});
       setContent(e.target.value);
       plot.value = '';
       plot.setAttribute('placeholder', 'Type /1 for heading 1');
-      // fetchLines();
     }
     return false;
   }
