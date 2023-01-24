@@ -3,7 +3,7 @@ class Api::V1::LinesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    @lines = Line.all
+    @lines = Line.all.order(:id)
     render json: @lines, status: :ok
   end
 

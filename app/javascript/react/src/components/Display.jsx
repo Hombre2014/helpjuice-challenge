@@ -7,7 +7,7 @@ const Display = (props) => {
 
   const handleChange = async (e) => {
     const updateLine = async (data) => {
-      fetch(`http://localhost:3000/api/v1/lines/2/update_content`, {
+      fetch(`http://localhost:3000/api/v1/lines/${e.target.dataset.id}/update_content`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
