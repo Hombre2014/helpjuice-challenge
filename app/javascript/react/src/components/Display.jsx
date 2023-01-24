@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 const Display = (props) => {
   const [lines, setLines] = useState([props.lines]);
   const linesUrl = 'http://localhost:3000/api/v1/lines';
+  const herokuUrl = 'https://pacific-tundra-66615.herokuapp.com/api/v1/lines';
 
   const handleChange = async (e) => {
     const updateLine = async (data) => {
-      fetch(`http://localhost:3000/api/v1/lines/${e.target.dataset.id}/update_content`, {
+      fetch(`${linesUrl}/${e.target.dataset.id}/update_content`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
