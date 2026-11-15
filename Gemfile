@@ -6,6 +6,9 @@ ruby "3.1.1"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4"
 
+# concurrent-ruby 1.3.5 no longer loads `logger`, which breaks Rails 7.0 on boot
+gem "concurrent-ruby", "< 1.3.5"
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
